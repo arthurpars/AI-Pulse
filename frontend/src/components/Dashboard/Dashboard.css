@@ -1,0 +1,232 @@
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+.dashboard-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 18px 28px;
+  border-bottom: 1px solid rgba(79, 126, 247, 0.1);
+}
+
+.sidebar-toggle-btn {
+  background: transparent;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  flex-shrink: 0;
+  transition: background 0.15s, color 0.15s;
+}
+
+.sidebar-toggle-btn:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.dashboard-title {
+  flex: 1;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.dashboard-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 0 0 0 0;
+}
+
+.dashboard-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 28px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.upload-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.section-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.section-subtitle {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.upload-error {
+  font-size: 13px;
+  color: var(--error);
+  margin-top: 4px;
+}
+
+.documents-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.documents-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.documents-count {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.documents-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.btn-knowledge-base {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px;
+  background: var(--accent);
+  color: #fff;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  transition: background 0.15s;
+}
+
+.btn-knowledge-base:hover {
+  background: var(--accent-hover);
+}
+
+.btn-knowledge-base .badge {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  padding: 1px 8px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .sidebar-toggle-btn {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .dashboard-header {
+    padding: 16px 22px 14px;
+  }
+
+  .dashboard-content {
+    padding: 20px 22px;
+    gap: 28px;
+  }
+}
+
+@media (max-width: 640px) {
+  .dashboard-header {
+    padding: 14px 16px 12px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .btn-knowledge-base {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .dashboard-content {
+    padding: 16px;
+    gap: 24px;
+  }
+}
+
+/* ── Light theme overrides ── */
+[data-theme="light"] .drop-zone {
+  border-color: #c5c8d8;
+  background: #f8f9fd;
+}
+
+[data-theme="light"] .drop-zone-icon {
+  background: #e2e4ed;
+  color: #5a5f7a;
+}
+
+[data-theme="light"] .drop-zone-icon svg {
+  stroke: #5a5f7a;
+}
+
+[data-theme="light"] .empty-state-icon {
+  background: #e2e4ed;
+  color: #5a5f7a;
+}
+
+[data-theme="light"] .empty-state-icon svg {
+  stroke: #5a5f7a;
+}
+
+[data-theme="light"] .doc-card {
+  background: #ffffff;
+  border-color: #e2e4ed;
+  color: #1a1c23;
+}
+
+[data-theme="light"] .doc-card:hover {
+  background: #f0f1f5;
+  border-color: #c5c8d8;
+}
+
+[data-theme="light"] .doc-card-icon {
+  background: #e8eaf6;
+  color: #4f7ef7;
+}
+
+[data-theme="light"] .doc-card-icon svg {
+  stroke: #4f7ef7;
+}
+
+[data-theme="light"] .doc-card-name {
+  color: #1a1c23;
+}
+
+[data-theme="light"] .doc-card-meta,
+[data-theme="light"] .doc-card-chunks,
+[data-theme="light"] .doc-card-status {
+  color: #5a5f7a;
+}
+
+[data-theme="light"] .doc-action-btn {
+  color: #5a5f7a;
+}
+
+[data-theme="light"] .doc-action-btn:hover {
+  color: #1a1c23;
+  background: #e2e4ed;
+}
+
+[data-theme="light"] .documents-count {
+  color: #5a5f7a;
+}
+
+[data-theme="light"] .btn-knowledge-base .badge {
+  background: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+}

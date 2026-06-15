@@ -1,0 +1,56 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum DocumentStatus {
+  processing
+  ready
+  error
+}
+
+model Document {
+  id            String         @id @default(cuid())
+  name          String
+  originalName  String
+  type          String
+  size          Int
+  extractedText String?        @db.Text
+  status        DocumentStatus @default(processing)
+  error         String?
+  uploadedAt    DateTime       @default(now())
+  chunks        Chunk[]
+  chatSessions  ChatSession[]
+}
+
+model Chunk {
+  id         String   @id @default(cuid())
+  content    String   @db.Text
+  chunkIndex Int
+  documentId String
+  document   Document @relation(fields: [documentId], references: [id], onDelete: Cascade)
+}
+
+model ChatSession {
+  id         String        @id @default(cuid())
+  documentId String?
+  type       String?
+  title      String
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
+  document   Document?     @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  messages   ChatMessage[]
+}
+
+model ChatMessage {
+  id        String      @id @default(cuid())
+  sessionId String
+  role      String
+  content   String      @db.Text
+  createdAt DateTime    @default(now())
+  session   ChatSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+}
