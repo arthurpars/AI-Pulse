@@ -19,7 +19,16 @@ import "./App.css";
 export default function App() {
   const [view, setView] = useState<AppView>({ type: "dashboard" });
   const [sidebarOpen, setSidebarOpen] = useState(() => window.innerWidth > 768);
+  const [draftInputs, setDraftInputs] = useState<Record<string, string>>({});
   const [theme, toggleTheme] = useTheme();
+
+  const currentDraftKey =
+    view.type === "document-chat" ? view.documentId :
+    view.type === "general-chat" ? "general" : "";
+  const currentDraft = currentDraftKey ? (draftInputs[currentDraftKey] ?? "") : "";
+  function setCurrentDraft(val: string) {
+    if (currentDraftKey) setDraftInputs((prev) => ({ ...prev, [currentDraftKey]: val }));
+  }
   const { documents } = useDocuments();
 
   useEffect(() => {
@@ -167,6 +176,8 @@ export default function App() {
             documentName={view.documentName}
             chunkCount={view.chunkCount}
             isGeneral={false}
+            inputValue={currentDraft}
+            onInputChange={setCurrentDraft}
             onToggleSidebar={() => setSidebarOpen((p) => !p)}
           />
         ) : (
@@ -174,6 +185,8 @@ export default function App() {
             key="general"
             isGeneral={true}
             documentCount={readyDocuments.length}
+            inputValue={currentDraft}
+            onInputChange={setCurrentDraft}
             onToggleSidebar={() => setSidebarOpen((p) => !p)}
           />
         )}

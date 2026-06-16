@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, KeyboardEvent } from "react";
+import { useRef, useEffect, KeyboardEvent } from "react";
 import { PanelLeft, File, MessageSquare, Send, Bot, User } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import { useChat } from "../../hooks/useChat";
@@ -10,6 +10,8 @@ interface Props {
   chunkCount?: number;
   isGeneral: boolean;
   documentCount?: number;
+  inputValue: string;
+  onInputChange: (val: string) => void;
   onToggleSidebar: () => void;
 }
 
@@ -26,10 +28,11 @@ export default function ChatWindow({
   chunkCount,
   isGeneral,
   documentCount,
+  inputValue,
+  onInputChange,
   onToggleSidebar,
 }: Props) {
   const { messages, isStreaming, error, sendMessage, loadSession } = useChat();
-  const [input, setInput] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
@@ -47,12 +50,12 @@ export default function ChatWindow({
     if (!el) return;
     el.style.height = "auto";
     el.style.height = `${el.scrollHeight}px`;
-  }, [input]);
+  }, [inputValue]);
 
   function handleSend() {
-    const content = input.trim();
+    const content = inputValue.trim();
     if (!content || isStreaming) return;
-    setInput("");
+    onInputChange("");
     sendMessage(content, documentId, isGeneral);
   }
 
@@ -180,8 +183,8 @@ export default function ChatWindow({
                 ? "Ask a question across all your documents…"
                 : "Ask a question about this document…"
             }
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
+            value={inputValue}
+            onChange={(e) => onInputChange(e.target.value)}
             onKeyDown={handleKeyDown}
             rows={1}
             disabled={isStreaming}
@@ -189,7 +192,7 @@ export default function ChatWindow({
           <button
             className="chat-send-btn"
             onClick={handleSend}
-            disabled={!input.trim() || isStreaming}
+            disabled={!inputValue.trim() || isStreaming}
             title="Send message"
           >
             <Send size={16} />
