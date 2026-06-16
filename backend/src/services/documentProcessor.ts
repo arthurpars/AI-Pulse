@@ -69,6 +69,11 @@ export async function processDocument(
           error: error.message,
         },
       })
-      .catch(() => {});
+      .catch((updateErr: unknown) => {
+        const e = updateErr as { code?: string };
+        if (e.code !== "P2025") {
+          console.error("Failed to update document error status:", updateErr);
+        }
+      });
   }
 }

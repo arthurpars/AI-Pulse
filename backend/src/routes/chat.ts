@@ -50,6 +50,12 @@ async function streamChat(
       session = await prisma.chatSession.findUnique({
         where: { id: sessionId },
       });
+      if (session) {
+        const mismatch = isGeneral
+          ? session.type !== "general"
+          : session.documentId !== documentId;
+        if (mismatch) session = null;
+      }
     }
 
     if (!session) {
